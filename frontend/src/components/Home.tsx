@@ -3,7 +3,7 @@ import styles from './home.module.css';
 
 const Home = () => {
     return (
-        <div className='text-2xl'>
+        <div className='text-5xl'>
             Home
         </div>
     )
