@@ -16,7 +16,7 @@ button {
     border: none;
     border-radius: 10px;
     background: none;
-    background-color: #262626;  
+    background-color: #2e2e2e;  
     transition: 0.2s;
 }
 
@@ -36,7 +36,7 @@ img{
 }
 
 .divEl:hover{
-    transform: translateY(-5%);
+    transform: translateY(-9%);
     transition: 1s;
     cursor: pointer;
 }
