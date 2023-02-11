@@ -20,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                     <Route path='/leaderboard' element={<Leaderboard />} />
                     <Route path='/signup' element={<Signup />} />
                     <Route path='/profile' element={<Profile />} />
+                    <Route path='/leaderboard' element={<Leaderboard />} />
                 </Routes>
             </BrowserRouter>
         </UserContextProvider>
