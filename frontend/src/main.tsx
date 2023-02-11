@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/Login/Login';
+import ProfileCard from './components/ProfileCard/ProfileCard';
 import Signup from './components/Signup/Signup';
 import Profile from './components/profile/Profile';
 import { UserContextProvider } from './context/userContext';
