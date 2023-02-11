@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./top.module.css";
 import icon from "../../assets/icon.svg";
-import tree from "../../assets/tree.svg";
+import tree1 from "../../assets/tree1.svg";
+import tree2 from "../../assets/tree2.svg";
 const Top: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-start h-screen w-screen  bg-black  text-slate-100 p-8 ">
@@ -31,13 +32,13 @@ const Top: React.FC = () => {
         <div className="flex items-center justify-end w-1/3">
           <img
             className={styles.img1}
-            src={tree}
+            src={tree1}
             alt="tree"
             draggable="false"
           />
           <img
             className={styles.img2}
-            src={tree}
+            src={tree2}
             alt="tree"
             draggable="false"
           />

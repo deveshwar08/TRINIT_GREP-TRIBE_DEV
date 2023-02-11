@@ -1,11 +1,10 @@
 import React from "react";
-import icon from "../../assets/icon.svg";
-import styles from "./login.module.css";
+import icon from "./assets/icon.svg";
 
 const Login: React.FC = () => {
   return (
     <div className="flex flex-col justify-center items-center h-screen  bg-black text-slate-100">
-      <div className={"flex flex-col justify-evenly items-center h-fit w-fit p-8 bg-zinc-900 rounded-2xl " +styles.login}>
+      <div className="flex flex-col justify-evenly items-center h-fit w-fit p-8 bg-zinc-900 rounded-2xl">
         <div className="text-7xl font-bold  text-green-500 p-2">
           <img src={icon} className="inline pr-5" />
           LOGIN
