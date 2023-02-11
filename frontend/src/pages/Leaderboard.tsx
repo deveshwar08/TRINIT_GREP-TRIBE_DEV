@@ -11,8 +11,17 @@ const Leaderboard = () => {
     const [leaderboard, setLeaderboard] = useState([]);
     useEffect(() => {
         async function fetchData() {
-            const temp = await axios.get(config.backend_url + '/ranks');
-            setLeaderboard(temp.data);
+            const temp = await axios.get(`${config.backend_url}/ranks`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Accept': '*/*'
+                }
+            }).then((res) => {
+                setLeaderboard(res.data);
+            }).catch((err) => {
+                console.log(err);
+            });
         }
         fetchData();
     }, []);

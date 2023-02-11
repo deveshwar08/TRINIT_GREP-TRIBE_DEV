@@ -12,7 +12,7 @@ import Leaderboard from './pages/Leaderboard';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
-        <UserContextProvider>
+        {/* <UserContextProvider> */}
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<HomePage />} />
@@ -23,6 +23,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                     <Route path='/leaderboard' element={<Leaderboard />} />
                 </Routes>
             </BrowserRouter>
-        </UserContextProvider>
+        {/* </UserContextProvider> */}
     </React.StrictMode>,
 );

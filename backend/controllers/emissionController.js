@@ -23,7 +23,7 @@ module.exports.postEmissions = async (req, res) => {
                     sessionId: sessionEntity.id,
                     url: url,
                     carbon: carbon,
-                    requests: 1,
+                    requests: 1,                    
                 }
             });
         } else {
