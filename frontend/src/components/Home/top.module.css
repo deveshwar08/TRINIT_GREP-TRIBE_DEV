@@ -1,0 +1,66 @@
+.heading{
+    font-size: 6em;
+    font-weight: 700;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+
+}
+
+.subheading{
+    font-size: 1em;
+    display:flex;
+    justify-content: start;
+    align-items: center;
+    padding:1em;
+    padding-bottom: 5em;
+}
+
+.mainLeft{
+    animation: slide;
+    animation-duration: 1s;
+}
+@keyframes slide{
+    0%{
+        opacity: 0;
+        transform: translateX(-10%);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0%);
+    }
+    
+}
+
+@keyframes pop{
+    0%{
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.img1{
+    position: absolute;
+    left: 75%;
+    top: 35%;
+    transition: 0.5s;
+    animation: pop;
+    animation-duration: 1s;
+}
+.img2{
+    transition: 0.5s;
+    animation: pop;
+    animation-duration: 1s;
+}
+
+.img1:hover , .img2:hover{
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+
