@@ -1,0 +1,29 @@
+{
+    "name": "Carbon emission",
+    "version": "1.0.0",
+    "description": "latest covid data of UK",
+    "manifest_version": 3,
+    "author": "grep tribe",
+    "background": {
+        "service_worker": "./scripts/background.js"
+      },
+      "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["./scripts/content.js"]
+        }
+      ],
+      "devtools_page": "devtools.html",
+    "action":{
+        "default_popup": "popup.html",
+        "default_title": "xyz"
+    },
+    "permissions": [
+        "webNavigation",
+        "webRequest",
+        "debugger",
+        "tabs",
+        "activeTab",
+        "storage"
+    ]
+}
