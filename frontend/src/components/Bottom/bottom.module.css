@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: black;
+    color: white;
+}
+
+button {
+    font-size: 1.5em;
+    padding: 0.5em 1em;
+    margin: 1em;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    background-color: #262626;  
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #fff;
+    color: #000;
+    transform: scale(1.05);
+    transition: 0.s;
+}
+
+img{
+    transition: 0.4s;
+}
+
+.divEl{
+    transition: 1s;
+}
+
+.divEl:hover{
+    transform: translateY(-5%);
+    transition: 1s;
+    cursor: pointer;
+}
+
+.divEl:hover img{
+    transform: scale(1.15);
+    transition: 0.4s;
+}

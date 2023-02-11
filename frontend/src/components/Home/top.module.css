@@ -11,10 +11,10 @@
 .subheading{
     font-size: 1em;
     display:flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     padding:1em;
-    padding-bottom: 5em;
+    padding-bottom: 10em;
 }
 
 .mainLeft{
@@ -50,7 +50,7 @@
     top: 35%;
     transition: 0.5s;
     animation: pop;
-    animation-duration: 1s;
+
 }
 .img2{
     transition: 0.5s;

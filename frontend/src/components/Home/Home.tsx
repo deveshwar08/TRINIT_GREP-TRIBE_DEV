@@ -1,13 +1,15 @@
-import React from "react";
-import styles from "./home.module.css";
-import  Top  from "./Top";
+import React from 'react';
+import Bottom from '../Bottom/Bottom';
+import Top from './Top';
+import styles from './home.module.css';
 
-const Home = () => {
-  return (
-    <div className={styles.home}>
-      <Top />
-    </div>
-  );
-};
+const Home : React.FC = () => {
+    return (
+        <div className={styles.home}>
+            <Top />
+            <Bottom />
+        </div>
+    )
+}
 
 export default Home;
