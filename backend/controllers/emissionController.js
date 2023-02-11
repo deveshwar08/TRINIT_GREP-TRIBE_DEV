@@ -4,6 +4,10 @@ const calculateCarbon = require('../utils/carbon');
 module.exports.postEmissions = async (req, res) => {
     const { session } = req.cookies;
     const { url, data } = req.body;
+    if (url.match('localhost')) {
+        res.status(500).json("Localhost");
+        return;
+    }
     try {
         const carbon = await calculateCarbon(url, data);
         const sessionEntity = await prisma.session.findUnique({
@@ -23,7 +27,7 @@ module.exports.postEmissions = async (req, res) => {
                     sessionId: sessionEntity.id,
                     url: url,
                     carbon: carbon,
-                    requests: 1,                    
+                    requests: 1,
                 }
             });
         } else {
@@ -80,38 +84,39 @@ module.exports.getCurrentSessionEmissions = async (req, res) => {
 module.exports.getSessionWiseEmissions = async (req, res) => {
     const { session } = req.cookies;
     try {
-        const sessionEntity = await prisma.session.findUnique({
+        const sessionEntity = await prisma.session.findMany({
             where: {
-                sessionId: parseInt(session),
+                id: parseInt(session),
             }
         });
         const sessions = await prisma.session.findMany({
             where: {
-                userId: sessionEntity.userId,
+                userId: sessionEntity[0].userId,
             },
             select: {
                 id: true,
                 startTime: true,
             }
         });
-        const response = sessions.sort((a, b) => a.startTime < b.startTime).map(async ses => {
+        const response = Promise.all(sessions.sort((a, b) => a.startTime - b.startTime).map(async ses => {
             const emissions = await prisma.emission.findMany({
                 where: {
                     sessionId: ses.id,
                 }
             });
             return {
-                session: ses.id,
-                startTime: ses.startTime,
-                emissions: emissions.map(emission => {
+                "session": ses.id,
+                "startTime": ses.startTime,
+                "emissions": emissions.map(emission => {
                     return {
-                        url: emission.url,
-                        carbon: emission.carbon,
+                        "url": emission.url,
+                        "carbon": emission.carbon,
                     }
                 }),
             }
-        });
-        res.status(200).json(response);
+        }));
+        const resp = await response;
+        res.status(200).json(resp);
     } catch (err) {
         res.status(400);
         console.log("Error: " + err);
@@ -119,22 +124,29 @@ module.exports.getSessionWiseEmissions = async (req, res) => {
 }
 
 module.exports.totalEmissions = async (req, res) => {
-    const { session } = req.cookies;
     try {
-        const sessionEntity = await prisma.session.findUnique({
-            where: {
-                sessionId: parseInt(session),
-            }
-        });
         const emissions = await prisma.emission.aggregate({
-            where: {
-                userId: sessionEntity.userId,
-            },
             _sum: {
                 carbon: true,
-            }
+            },
         });
         res.status(200).json(emissions._sum.carbon);
+    } catch (err) {
+        res.status(400);
+        console.log(err);
+    }
+};
+
+module.exports.averageEmissions = async (req, res) => {
+    try {
+        const emissions = await prisma.emission.aggregate({
+            _sum: {
+                carbon: true,
+                requests: true,
+            },
+        });
+
+        res.status(200).json(emissions._sum.carbon / emissions._sum.requests);
     } catch (err) {
         res.status(400);
         console.log(err);

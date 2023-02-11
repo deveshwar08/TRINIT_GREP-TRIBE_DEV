@@ -21,7 +21,7 @@ const ProfileCard: React.FC<ProfileCardType> = (props) => {
                                 {item.url}
                             </p>
                             <p>
-                                {item.amount}
+                                {item.carbon}
                             </p>
                         </div>
                     )

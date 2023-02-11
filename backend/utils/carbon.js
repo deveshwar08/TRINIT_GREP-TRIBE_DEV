@@ -15,7 +15,7 @@ module.exports = async (url, data) => {
         });
         return calculateCarbon.data.statistics.co2.grid.grams;
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         return;
     }
 };

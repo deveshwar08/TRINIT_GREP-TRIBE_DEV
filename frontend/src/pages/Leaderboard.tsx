@@ -11,14 +11,16 @@ const Leaderboard = () => {
     const [leaderboard, setLeaderboard] = useState([]);
     useEffect(() => {
         async function fetchData() {
-            const temp = await axios.get(`${config.backend_url}/ranks`, {
+            await fetch(`${config.backend_url}/ranks`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Accept': '*/*'
+                    // 'Access-Control-Allow-Origin': '*',
+                    // 'Accept': '*/*'
                 }
-            }).then((res) => {
-                setLeaderboard(res.data);
+            }).then(res => res.json()
+            ).then((res) => {
+                setLeaderboard(res);
             }).catch((err) => {
                 console.log(err);
             });
@@ -133,49 +135,49 @@ const Leaderboard = () => {
         },
     };
 
-    let mockleaderboard = [
-        {
-            name: "Arun",
-            carbon: 10
-        },
-        {
-            name: "Bhoopesh",
-            carbon: 20
-        },
-        {
-            name: "Chitransh",
-            carbon: 30
-        },
-        {
-            name: "Deveshwar",
-            carbon: 40
-        },
-        {
-            name: "Eashwra",
-            carbon: 50
-        },
-        {
-            name: "Fahadh",
-            carbon: 60
-        },
-        {
-            name: "Giroud",
-            carbon: 70
-        },
-        {
-            name: "Harish",
-            carbon: 80
-        },
-        {
-            name: "Ishaath",
-            carbon: 90
-        },
-        {
-            name: "Jerry",
-            carbon: 100
-        },
+    // let mockleaderboard = [
+    //     {
+    //         name: "Arun",
+    //         carbon: 10
+    //     },
+    //     {
+    //         name: "Bhoopesh",
+    //         carbon: 20
+    //     },
+    //     {
+    //         name: "Chitransh",
+    //         carbon: 30
+    //     },
+    //     {
+    //         name: "Deveshwar",
+    //         carbon: 40
+    //     },
+    //     {
+    //         name: "Eashwra",
+    //         carbon: 50
+    //     },
+    //     {
+    //         name: "Fahadh",
+    //         carbon: 60
+    //     },
+    //     {
+    //         name: "Giroud",
+    //         carbon: 70
+    //     },
+    //     {
+    //         name: "Harish",
+    //         carbon: 80
+    //     },
+    //     {
+    //         name: "Ishaath",
+    //         carbon: 90
+    //     },
+    //     {
+    //         name: "Jerry",
+    //         carbon: 100
+    //     },
 
-    ]
+    // ]
 
     return (
         <>
@@ -189,12 +191,12 @@ const Leaderboard = () => {
                     </div>
                     <div className="flex flex-col gap-5">
                         {
-                            mockleaderboard.map((user, index) => {
+                            leaderboard && leaderboard.length > 0 && leaderboard.map((user, index) => {
                                 return (
-                                    <div className="flex justify-between text-xl">
+                                    <div className="flex justify-between text-xl" key={index}>
                                         <span className="font-bold">{index+1}</span>
-                                        <span className="font-bold">{user.name}</span>
-                                        <span className="text-red-500 font-bold">{user.carbon}</span>
+                                        <span className="font-bold">{user.url}</span>
+                                        <span className={`${user.carbon < 2 ? "text-green-500" : user.carbon < 10 ? "text-yellow-500" : "text-red-500"} font-bold`}>{user.carbon}</span>
                                     </div>
                                 )
                             })

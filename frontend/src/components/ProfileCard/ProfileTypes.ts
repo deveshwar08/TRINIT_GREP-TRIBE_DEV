@@ -1,6 +1,6 @@
 type ProfileCardData = {
     url: string;
-    amount: number;
+    carbon: number;
 }
 
 export type ProfileCardType = {
