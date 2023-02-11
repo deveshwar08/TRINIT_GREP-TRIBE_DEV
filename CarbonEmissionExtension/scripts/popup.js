@@ -12,7 +12,7 @@ const backendUrl = "http://localhost:5000/";
 //     }
 // );
 const login = async (email, password) => {
-    const res = await fetch(backendUrl + "/login", {
+    const response = await fetch(backendUrl + "/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -22,6 +22,7 @@ const login = async (email, password) => {
             password: password
         }),
     });
+    const res = response.json();
     const cookie = res.headers.get("set-cookie");
     chrome.cookies.set({
         url: frontendUrl,
