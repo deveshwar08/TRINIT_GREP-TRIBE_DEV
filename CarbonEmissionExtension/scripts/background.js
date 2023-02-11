@@ -10,7 +10,7 @@ let value;
 chrome.cookies.set({
     url: frontendUrl,
     name: "session",
-    value: "4"
+    value: "5"
 });
 chrome.cookies.get({
     url: frontendUrl,

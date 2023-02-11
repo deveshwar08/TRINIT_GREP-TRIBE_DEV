@@ -22,6 +22,7 @@ const Bottom: React.FC = () => {
                         styles.divEl +
                         " flex flex-col xl:w-80 xl:h-80 sm:h-64 sm:w-64 rounded-3xl bg-[#262626] justify-center items-center gap-10 "
                     }
+                    onClick={(() => navigate('/profile'))}
                 >
                     <img src={TrackImage} alt="logo" />
                     <p>Track Your Footprint</p>
