@@ -1,9 +1,11 @@
+const prisma = require("../prisma");
+
 module.exports = async (req, res, next) => {
     const { session } = req.cookies;
     try {
         const sessionEntity = await prisma.session.findUnique({
             where: {
-                sessionId: session,
+                id: parseInt(session),
             }
         });
         if (!sessionEntity || sessionEntity.endTime > new Date()) {

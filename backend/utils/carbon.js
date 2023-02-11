@@ -6,14 +6,14 @@ module.exports = async (url, data) => {
                 url: url,
             }
         });
-        const isGreen = websiteData.green == "unknown" ? false : websiteData.green;
+        const isGreen = websiteData.green == "unknown" || websiteData.green == undefined ? false : websiteData.green;
         const calculateCarbon = await axios.get('https://api.websitecarbon.com/data', {
             params: {
                 bytes: data,
                 green: isGreen,
             }
         });
-        return calculateCarbon.statics.co2.grid.grams;
+        return calculateCarbon.data.statistics.co2.grid.grams;
     } catch (err) {
         console.log(err);
         return;

@@ -26,7 +26,7 @@ model Session {
 model Emission {
     id        Int     @id @default(autoincrement())
     sessionId Int
-    url       Int
+    url       String
     carbon    Float
     requests  Int
     Session   Session @relation(fields: [sessionId], references: [id])

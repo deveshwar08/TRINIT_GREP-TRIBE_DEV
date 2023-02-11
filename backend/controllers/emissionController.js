@@ -6,25 +6,41 @@ module.exports.postEmissions = async (req, res) => {
     const { url, data } = req.body;
     try {
         const carbon = await calculateCarbon(url, data);
-        if (await prisma.emission.findFirst({
+        const sessionEntity = await prisma.session.findUnique({
             where: {
-                sessionId: session,
-                url,
+                id: parseInt(session),
             }
-        }) === null) {
+        });
+        const count = await prisma.emission.count({
+            where: {
+                sessionId: sessionEntity.id,
+                url: url,
+            }
+        });
+        if (count == 0) {
             await prisma.emission.create({
                 data: {
-                    sessionId: session,
-                    url,
-                    carbon,
+                    sessionId: sessionEntity.id,
+                    url: url,
+                    carbon: carbon,
                     requests: 1,
                 }
             });
         } else {
-            await prisma.emission.update({
+            await prisma.emission.updateMany({
                 where: {
-                    sessionId: session,
-                    url,
+                    AND: [
+                        {
+                            sessionId: {
+                                equals: sessionEntity.id
+                            }
+                        },
+                        {
+                            url: {
+                                equals: url
+                            }
+                        }
+                    ]
                 },
                 data: {
                     carbon: {
@@ -48,7 +64,7 @@ module.exports.getCurrentSessionEmissions = async (req, res) => {
     try {
         const emissions = await prisma.emission.aggregate({
             where: {
-                sessionId: session,
+                sessionId: parseInt(session),
             },
             _sum: {
                 carbon: true,
@@ -66,7 +82,7 @@ module.exports.getSessionWiseEmissions = async (req, res) => {
     try {
         const sessionEntity = await prisma.session.findUnique({
             where: {
-                sessionId: session,
+                sessionId: parseInt(session),
             }
         });
         const sessions = await prisma.session.findMany({
@@ -78,15 +94,15 @@ module.exports.getSessionWiseEmissions = async (req, res) => {
                 startTime: true,
             }
         });
-        const response = sessions.sort((a, b) => a.startTime < b.startTime).map(async session => {
+        const response = sessions.sort((a, b) => a.startTime < b.startTime).map(async ses => {
             const emissions = await prisma.emission.findMany({
                 where: {
-                    sessionId: session.id,
+                    sessionId: ses.id,
                 }
             });
             return {
-                session: session.id,
-                startTime: session.startTime,
+                session: ses.id,
+                startTime: ses.startTime,
                 emissions: emissions.map(emission => {
                     return {
                         url: emission.url,
@@ -107,7 +123,7 @@ module.exports.totalEmissions = async (req, res) => {
     try {
         const sessionEntity = await prisma.session.findUnique({
             where: {
-                sessionId: session,
+                sessionId: parseInt(session),
             }
         });
         const emissions = await prisma.emission.aggregate({
@@ -140,6 +156,7 @@ module.exports.rankWebsites = async (req, res) => {
                 carbon: emission._sum.carbon / emission._sum.requests,
             }
         });
+        response.sort((a, b) => a.carbon - b.carbon);
         res.status(200).json(response);
     } catch (err) {
         res.status(400);

@@ -24,6 +24,10 @@
         "debugger",
         "tabs",
         "activeTab",
-        "storage"
+        "storage",
+        "cookies"
+    ],
+    "host_permissions": [
+        "http://localhost:5173/*"
     ]
 }

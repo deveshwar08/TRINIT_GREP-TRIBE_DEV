@@ -1,4 +1,5 @@
 const prisma = require("../prisma");
+const bcrypt = require("bcrypt");
 
 module.exports.signup = async (req, res) => {
     const { email, password, name } = req.body;
@@ -8,7 +9,7 @@ module.exports.signup = async (req, res) => {
             {
                 data: {
                     email,
-                    hashedPassword,
+                    password: hashedPassword,
                     name
                 }
             }
@@ -28,10 +29,12 @@ module.exports.login = async (req, res) => {
                 email
             }
         });
-        const auth = await bcrypt.compare(password, user.hashedPassword);
-        if (!auth) {
-            res.status(400).json("Invalid credentials");
-        }
+        await bcrypt.compare(password, user.password, (err, result) => {
+            if (err) {
+                res.status(400).json("Invalid credentials");
+                return;
+            }
+        });
         const session = await prisma.session.create({
             data: {
                 userId: user.id,

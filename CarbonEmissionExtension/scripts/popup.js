@@ -1,8 +1,10 @@
 const h1 = document.querySelector("h1");
 const p1 = document.querySelector("p");
 
-const frontendUrl = "http://localhost:3000/";
-const backendUrl = "http://localhost:5000/";
+const carbon = document.getElementById("grams");
+
+const frontendUrl = "http://localhost:5173/";
+const backendUrl = "http://localhost:8000/";
 // chrome.runtime.sendMessage(
 //     { name: "request", userid: "123" },
 //     function (response) {
@@ -44,23 +46,31 @@ const register = async (email, password) => {
     });
 }
 
-const getCurrentSessionEmissions = async () => {
+const getCurrentSessionEmissions = async () => {  
+    chrome.cookies.set({
+        url: frontendUrl,
+        name: "session",
+        value: "2"
+    });
     chrome.cookies.get({
         url: frontendUrl,
         name: "session",
-    }, async function async(cookie) {
-        const res = await fetch(backendUrl + "/current", {
+    }, async function (cookie) {
+        // if(cookie === null) {
+
+        // }
+        const res = await fetch(backendUrl + "current", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Cookie": "session=" + cookie.value,
             },
         });
-        h1.textContent = res.json();
+        carbon.textContent = res.json();
     }
     );
 }
 
 setInterval(() => {
     getCurrentSessionEmissions();
-}, 30000);
+}, 3000);
