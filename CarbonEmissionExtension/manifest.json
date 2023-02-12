@@ -1,7 +1,7 @@
 {
-    "name": "Carbon emission",
+    "name": "Carbon Meter",
     "version": "1.0.0",
-    "description": "latest covid data of UK",
+    "description": "a carbon emission extension for chrome that tracks your carbon footprint on all the sites you visit",
     "manifest_version": 3,
     "author": "grep tribe",
     "background": {
